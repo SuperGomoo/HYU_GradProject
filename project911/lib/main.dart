@@ -18,7 +18,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class IntroScreen extends StatelessWidget {
+class IntroScreen extends StatefulWidget {
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // 3초 후 메인 화면으로 이동
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -109,16 +126,6 @@ class IntroScreen extends StatelessWidget {
                       ),
                     ],
                   )
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // 메인 화면으로 이동
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainScreen()),
-                  );
-                },
-                child: Text('Go to Main Screen'),
               ),
             ],
           ),
