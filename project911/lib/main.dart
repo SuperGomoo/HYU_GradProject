@@ -12,10 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
+      title: 'Intro to Main Example',
+      home: IntroScreen(),
+    );
+  }
+}
 
-        ),
+class IntroScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(),
         body: Container(
           width: 512,
           height: 683,
@@ -101,6 +109,16 @@ class MyApp extends StatelessWidget {
                       ),
                     ],
                   )
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // 메인 화면으로 이동
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainScreen()),
+                  );
+                },
+                child: Text('Go to Main Screen'),
               ),
             ],
           ),
