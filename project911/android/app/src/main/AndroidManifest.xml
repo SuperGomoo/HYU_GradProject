@@ -30,6 +30,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="nvawrem6ds" /> <!-- 네이버 클라이언트 ID -->
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
