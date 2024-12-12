@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'main_map.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // 초기화
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +32,7 @@ class _IntroScreenState extends State<IntroScreen> {
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
+        MaterialPageRoute(builder: (context) => MainMap()),
       );
     });
   }
