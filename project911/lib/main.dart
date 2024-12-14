@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'main_map.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // 초기화
+void main() {
   runApp(MyApp());
 }
 

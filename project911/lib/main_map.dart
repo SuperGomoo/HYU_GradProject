@@ -1,44 +1,71 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-void main() async {
-  await _initialize();
-  runApp(const MainMap());
+void main() {
+  runApp(MainMap());
 }
 
-Future<void> _initialize() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await NaverMapSdk.instance.initialize(
-      clientId: "nvawrem6ds",     // 클라이언트 ID 설정
-      onAuthFailed: (e) => log("네이버맵 인증오류 : $e", name: "onAuthFailed")
-  );
-}
 class MainMap extends StatelessWidget {
-  const MainMap({Key? key});
-
   @override
   Widget build(BuildContext context) {
-    // NaverMapController 객체의 비동기 작업 완료를 나타내는 Completer 생성
-    final Completer<NaverMapController> mapControllerCompleter = Completer();
-
     return MaterialApp(
-      home: Scaffold(
-        body: NaverMap(
-          options: const NaverMapViewOptions(
-            indoorEnable: true,             // 실내 맵 사용 가능 여부 설정
-            locationButtonEnable: false,    // 위치 버튼 표시 여부 설정
-            consumeSymbolTapEvents: false,  // 심볼 탭 이벤트 소비 여부 설정
-          ),
-          onMapReady: (controller) async {                // 지도 준비 완료 시 호출되는 콜백 함수
-            mapControllerCompleter.complete(controller);  // Completer에 지도 컨트롤러 완료 신호 전송
-            log("onMapReady", name: "onMapReady");
-          },
-        ),
-      ),
+      home: MapScreen(),
     );
   }
 }
 
+class MapScreen extends StatefulWidget {
+  @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  late GoogleMapController mapController;
+
+  // 지도 초기 위치
+  final LatLng _center = const LatLng(37.5665, 126.9780); // 서울 위치
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0), // AppBar 높이 조절
+        child: AppBar(
+          title: Text('질병, 진료과, 병원을 검색해보세요.'),
+            backgroundColor: Color(0xffAD0000),
+            leading: IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+              // 메뉴 아이콘 클릭 시 동작
+              },
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  // 검색 아이콘 클릭 시 동작
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  // 설정 아이콘 클릭 시 동작
+                },
+              ),
+            ],
+          ),
+        ),
+      body: GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 11.0,
+      ),
+    ),
+    );
+  }
+}
